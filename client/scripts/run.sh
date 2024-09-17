@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Run the client
+export OTEL_PYTHON_LOG_CORRELATION=true 
+
 opentelemetry-instrument \
     --traces_exporter otlp \
     --metrics_exporter otlp \
