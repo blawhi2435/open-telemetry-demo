@@ -14,10 +14,9 @@ class Logger:
 
         logging.basicConfig(
             level=logging.getLevelName(level),
-            format='[%(asctime)s - %(name)s - %(levelname)s] - [trace_id=%(otelTraceID)s span_id=%(otelSpanID)s resource.service.name=%(otelServiceName)s trace_sampled=%(otelTraceSampled)s] - %(message)s',
+            format='[%(asctime)s - %(name)s - %(levelname)s] - %(message)s',
             handlers=[logging.StreamHandler()]
         )
-        # LoggingInstrumentor().instrument(set_logging_format=True)
 
 
         self.__logger = logging.getLogger("client")

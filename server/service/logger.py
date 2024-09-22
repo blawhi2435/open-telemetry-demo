@@ -12,24 +12,31 @@ class LoggerFields(BaseModel):
 
 class Logger:
     def __init__(self, level: str):
+
+        LoggingInstrumentor().instrument(set_logging_format=True, set_logging_level=logging.DEBUG)
+        logging.basicConfig(
+            level=logging.getLevelName(level),
+            format='[%(asctime)s - %(name)s - %(levelname)s] - [trace_id=%(otelTraceID)s span_id=%(otelSpanID)s resource.service.name=%(otelServiceName)s trace_sampled=%(otelTraceSampled)s] - %(message)s',
+            handlers=[logging.StreamHandler()]
+        )
         self.__logger = logging.getLogger("server")
-        self.__logger.setLevel(level=logging.getLevelName(level))
-        LoggingInstrumentor().instrument(set_logging_format=True)
+        # self.__logger.setLevel(level=logging.getLevelName(level))
+
 
 
         # create console handler and set level to debug
-        ch = logging.StreamHandler()
-        ch.setLevel(level=logging.getLevelName(level))
+        # ch = logging.StreamHandler()
+        # ch.setLevel(level=logging.getLevelName(level))
 
-        # create formatter
-        formatter = logging.Formatter('[%(asctime)s - %(name)s - %(levelname)s] - [trace_id=%(otelTraceID)s span_id=%(otelSpanID)s resource.service.name=%(otelServiceName)s trace_sampled=%(otelTraceSampled)s] - %(message)s')
+        # # create formatter
+        # formatter = logging.Formatter('[%(asctime)s - %(name)s - %(levelname)s] - [trace_id=%(otelTraceID)s span_id=%(otelSpanID)s resource.service.name=%(otelServiceName)s trace_sampled=%(otelTraceSampled)s] - %(message)s')
 
-        # add formatter to ch
-        ch.setFormatter(formatter)
+        # # add formatter to ch
+        # ch.setFormatter(formatter)
 
-        # add ch to logger
-        self.__logger.addHandler(ch)
-        self.__logger.propagate = False
+        # # add ch to logger
+        # self.__logger.addHandler(ch)
+        # self.__logger.propagate = False
         
     
     def log(self, level: int, user_id: int, order_id: str, extra: dict, message: str):

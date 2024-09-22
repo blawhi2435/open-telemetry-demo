@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Run the client
-export OTEL_PYTHON_LOG_CORRELATION=true 
 
-opentelemetry-instrument \
+    OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true \
+    opentelemetry-instrument \
     --traces_exporter otlp \
     --metrics_exporter otlp \
     --logs_exporter otlp \
